@@ -3,9 +3,7 @@ services:
 - docker
 deploy:
   provider: releases
-  api_key:
-    secure: o5r+hAdxZhdDOnMUpnyJ3Z4OnHWoLT5Tlg6k2+ijc3i0yFMdaJkzjVw+eGtpCza7f3L5qf9u0fK2vHz0oFOHfQOqfdkrLE5YEYCkjdg3Y+iOdoFvU92Z8RGeXOJGc/5fw7mHXj/aMH5azUWarXHNfARGbX1K4/nH2ya1y0LUQo5Y9nM4rbO9N9hyW8EmayhgfKPi5uCQ40yZTxgm3OvIu21tCfvwBOg6TrYynDeBnpkguRCagx89b0COuWlBdU2JwSLbqzbQ58xfuJhv6aKrZrJmBW/aeUgAZM7KbARMjIdpa/SZ2s7bIlmHKrUtZYN516Rcva09FU/UhJ0HhXBEjDOFX3pd36IhVC1W1qKyKDWjP6wx9j1ZY67X9rHkURcaIUa22gn7abNuD9pYJuLbXG3/EyVnLG39dxowr5FMjelMwW2+gtFLb865ttbA8pNynCmYwMJHO7mbDeH8V9ST4lITl9SUJ2xcM34au9gR2j1tzMUF01ZhQxpAeRnzRHraHHLNA5okJUoQQ4H3slW7WZ7BlYHCxn8nckYoaZ2YbLCvGIiBPRYnOYtPquiIMB3qODdgzaN1LAlyl9qsBtvnjlQMqNCp2FWeOz+JUo0uh2r6Wht3fqNNGa+lF3xH/MMrtlLez5IcoVxYa39Y+CPwpzyacoxqEHFEJi4btkHqSzI=
-  file: '"data/videos.json"'
+  api_key: $GITHUB_TOKEN
   skip_cleanup: true
 before_install:
 - docker build -t mandiberg-painting .
