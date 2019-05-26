@@ -1,0 +1,25 @@
+sudo: required
+
+services:
+  - docker
+
+deploy:
+  provider: releases
+  file: ""
+  script:
+  skip_cleanup: tru
+  on:
+    tags: true
+
+before_install:
+  - docker build -t mandiberg-painting .
+before_deploy:
+  - git config --local user.name "Travis CI"
+  - git config --local user.email "ben@lerchin.com"
+  - $TIMESTAMP=$(date + '%Y%m%d%H%M%S')
+  - git add -u
+  - git commit -m "Adding results on $TIMESTAMP"
+  - export TRAVIS_TAG=$TIMESTAMP
+  - git tag $TRAVIS_TAG
+script:
+  - docker run mandiberg-painting -v $(PWD):/root/mandiberg-painting/data -e API_KEY -e CHANNEL_ID
