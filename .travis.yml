@@ -22,4 +22,4 @@ before_deploy:
   - export TRAVIS_TAG=$TIMESTAMP
   - git tag $TRAVIS_TAG
 script:
-  - docker run mandiberg-painting -v $(pwd):/root/mandiberg-painting/data -e API_KEY -e CHANNEL_ID
+  - docker run -v $(pwd):/root/mandiberg-painting/data -e API_KEY -e CHANNEL_ID mandiberg-painting python getYoutube.py
