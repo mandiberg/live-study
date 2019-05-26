@@ -22,4 +22,4 @@ before_deploy:
   - export TRAVIS_TAG=$TIMESTAMP
   - git tag $TRAVIS_TAG
 script:
-  - docker run mandiberg-painting -v $(PWD):/root/mandiberg-painting/data -e API_KEY -e CHANNEL_ID
+  - docker run mandiberg-painting -v $PWD:/root/mandiberg-painting/data -e API_KEY -e CHANNEL_ID
