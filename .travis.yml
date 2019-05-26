@@ -3,6 +3,7 @@ services:
 - docker
 deploy:
   provider: releases
+  file: "data/videos.json"
   api_key: $GITHUB_TOKEN
   skip_cleanup: true
 before_install:
@@ -10,7 +11,7 @@ before_install:
 before_deploy:
 - git config --local user.name "Travis CI"
 - git config --local user.email "ben@lerchin.com"
-- export TIMESTAMP=$(date +'%Y%m%d')
+- export TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
 - git add -u
 - git commit --allow-empty -m "Adding results on $TIMESTAMP"
 - export TRAVIS_TAG=$TIMESTAMP
