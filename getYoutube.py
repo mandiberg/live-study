@@ -1,5 +1,6 @@
 from datetime import datetime
 from dotenv import load_dotenv
+from json import dumps
 from requests import get
 from time import strptime
 from os.path import isfile, join, dirname
@@ -13,6 +14,7 @@ API_KEY = environ.get('API_KEY');
 CHANNEL_ID = environ.get('CHANNEL_ID');
 
 FILTER_BEFORE = datetime(2019, 1, 1)
+DATA_PATH = 'data/videos.json'
 
 def get_request_url(api_key, channel_id, page_token=None):
     url = 'https://www.googleapis.com/youtube/v3/search?key=%s&channelId=%s&part=snippet,id&maxResults=50&order=date' % (api_key, channel_id)
@@ -53,4 +55,6 @@ def format_video(video):
     }
 
 videos = [format_video(v) for v in filter_videos(get_videos())]
-print(videos)
+
+with open(DATA_PATH, 'w') as f:
+    f.write(dumps(videos))

@@ -5,11 +5,8 @@ services:
 
 deploy:
   provider: releases
-  file: ""
-  script:
-  skip_cleanup: tru
-  on:
-    tags: true
+  file: "data/videos.json"
+  skip_cleanup: true
 
 before_install:
   - docker build -t mandiberg-painting .
@@ -22,4 +19,4 @@ before_deploy:
   - export TRAVIS_TAG=$TIMESTAMP
   - git tag $TRAVIS_TAG
 script:
-  - docker run -v $(pwd):/root/mandiberg-painting/data -e API_KEY -e CHANNEL_ID mandiberg-painting python getYoutube.py
+  - docker run -v $(pwd)/data:/root/mandiberg-painting/data -e API_KEY -e CHANNEL_ID mandiberg-painting python getYoutube.py
