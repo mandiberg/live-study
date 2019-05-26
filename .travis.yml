@@ -13,9 +13,9 @@ before_install:
 before_deploy:
   - git config --local user.name "Travis CI"
   - git config --local user.email "ben@lerchin.com"
-  - export TIMESTAMP=$('%Y%m%d')
+  - export TIMESTAMP=$(date +'%Y%m%d')
   - git add -u
-  - git commit -m "Adding results on $TIMESTAMP"
+  - git commit --allow-empty -m "Adding results on $TIMESTAMP"
   - export TRAVIS_TAG=$TIMESTAMP
   - git tag $TRAVIS_TAG
 script:
