@@ -25,7 +25,7 @@ def get_page(page_token=None):
     if r.status_code == 200:
         return r.json()
     else:
-        raise NetworkError(r.text)
+        raise Exception(r.text)
         return r.json()
 
 def get_videos():
