@@ -13,7 +13,7 @@ before_deploy:
 - git config --local user.email "ben@lerchin.com"
 - export TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
 - git add -u
-- git commit --allow-empty -m "Adding results on $TIMESTAMP"
+- git diff-index --quiet HEAD || git commit -m "Adding results on $TIMESTAMP"
 - export TRAVIS_TAG=$TIMESTAMP
 - git tag $TRAVIS_TAG
 script:
