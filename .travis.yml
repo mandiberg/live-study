@@ -7,7 +7,6 @@ deploy:
   api_key: "$GITHUB_TOKEN"
   skip_cleanup: true
 before_install:
-- openssl aes-256-cbc -K $encrypted_679655fa46ed_key -iv $encrypted_679655fa46ed_iv -in id_rsa.enc -out id_rsa -d
 - docker build -t mandiberg-painting .
 before_deploy:
 - git config --local user.name "Travis CI"
@@ -15,7 +14,9 @@ before_deploy:
 - export TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
 - git add -u
 - git diff-index --quiet HEAD || git commit -m "Adding results on $TIMESTAMP"
-- GIT_SSH_COMMAND="ssh -i $(pwd)/id_rsa" git push origin master
+- git remote rm origin
+- git remote add origin "https://blerchin:$GITHUB_TOKEN@github.com/blerchin/mandiberg-painting.git
+- git push origin master
 - export TRAVIS_TAG=$TIMESTAMP
 - git tag $TRAVIS_TAG
 script:
