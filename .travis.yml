@@ -1,25 +1,17 @@
 sudo: required
 services:
 - docker
-deploy:
-  provider: releases
-  file: data/videos.json
-  api_key: "$GITHUB_TOKEN"
-  skip_cleanup: true
 before_install:
 - docker build -t mandiberg-painting .
-before_deploy:
 - git config --local user.name "Travis CI"
 - git config --local user.email "ben@lerchin.com"
-- export TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
-- export TRAVIS_TAG=$TIMESTAMP
-- git tag $TRAVIS_TAG
+- git checkout master
+- git remote rm origin
+- git remote add origin "https://blerchin:$GITHUB_TOKEN@github.com/blerchin/mandiberg-painting.git"
 script:
 - docker run -v $(pwd)/data:/root/mandiberg-painting/data -e API_KEY -e CHANNEL_ID
   mandiberg-painting python getYoutube.py
-- git checkout master
+- export TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
 - git add -u
 - git commit -m "Adding results on $TIMESTAMP"
-- git remote rm origin
-- git remote add origin "https://blerchin:$GITHUB_TOKEN@github.com/blerchin/mandiberg-painting.git"
 - git push origin master
