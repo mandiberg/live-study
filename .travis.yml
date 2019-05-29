@@ -13,5 +13,5 @@ script:
   mandiberg-painting python getYoutube.py
 - export TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
 - git add -u
-- git commit -m "Adding results on $TIMESTAMP"
+- git diff-index --quiet HEAD || git commit -m "Adding results on $TIMESTAMP"
 - git push origin master
