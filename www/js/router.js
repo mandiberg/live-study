@@ -10,9 +10,7 @@ route('/about', 'about', function(){
 
 route('/', 'list', function(){
 	new Scroller($('#list-region'), {
-		dataPath: function(num){
-			return VIDEOS_URL;
-		},
+		dataPath: VIDEOS_URL,
 		template: "video",
 	});
 });

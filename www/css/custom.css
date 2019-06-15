@@ -17,6 +17,7 @@ body {
 .scroller {
 	margin: 0px;
 	float: left;
+	min-height: 100vh;
 }
 #list-region {
 	width: auto;

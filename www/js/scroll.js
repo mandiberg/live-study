@@ -17,6 +17,7 @@ window.Scroller = (function(){
 			this.item_margin = options.item_margin || g.c.ITEM_MARGIN;
 			this.entry_c = 1;
 			this.entry_i = 0;
+			this.entry_len = 20;
 			this.current_row = null;
 			this.fetching = false;
 			this.loader_threshold = 800;
@@ -67,7 +68,13 @@ window.Scroller = (function(){
 		Scroller.prototype.renderChunk = function(data){
 			var self = this;
 			this.withNextCollection( function(){
-				_.each(self.collection, _.bind(self.renderEntry, self));
+				var start = self.entry_i * self.entry_len;
+				var end = (self.entry_i + 1) * self.entry_len;
+				if (end > self.collection.length) {
+					end = self.collection.length;
+				}
+				var chunk = self.collection.slice(start, end);
+				_.each(chunk, _.bind(self.renderEntry, self));
 			});
 		};
 		Scroller.prototype.renderEntry = function(entry){
@@ -96,21 +103,24 @@ window.Scroller = (function(){
 			if(this.last_chunk){
 				return false;
 			}
-			$.ajax({
-				url: this.dataPath(this.chunk++),
-				success: function(data){
-					data = JSON.parse(data);
-					self.fetching = false;
-					self.collection = data;
-					self.entry_c = data.length;
-					self.entry_i = 0;
-					cb();
-				},
-				error: function(){
-					self.last_chunk = true;
-					self.onEndReached();
-				}
-			});
+			if (self.collection && ((self.entry_i + 1) * self.entry_len) < self.entry_c - 1) {
+				self.entry_i++;
+				cb();
+			} else if (self.collection) {
+				self.last_chunk = true;
+				self.onEndReached();
+			} else {
+				$.ajax({
+					url: this.dataPath,
+					success: function(data){
+						data = JSON.parse(data);
+						self.fetching = false;
+						self.collection = data;
+						self.entry_c = data.length;
+						cb();
+					}
+				});
+			}
 		};
 		return Scroller;
 })()
