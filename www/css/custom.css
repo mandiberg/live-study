@@ -1,114 +1,154 @@
 body {
-	padding-top: 70px;
-	padding-bottom: 70px;
-	background-color: #efefef;
-	font-family: 'Times New Roman', serif;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  background-color: #efefef;
+  font-family: "Times New Roman", serif;
 }
-[data-current-template=about].pw-container.pw-width,
-[data-current-template=credits].pw-container.pw-width  {
-	min-width: 320px;
+[data-current-template="about"].pw-container.pw-width,
+[data-current-template="credits"].pw-container.pw-width {
+  min-width: 320px;
 }
 .pw-container {
-	position: relative;
-	margin: 0px auto;
-	width: auto;
-	overflow: hidden;
+  position: relative;
+  margin: 0px auto;
+  width: auto;
+  overflow: hidden;
 }
 .scroller {
-	margin: 0px;
-	float: left;
-	min-height: 100vh;
+  margin: 0px;
+  float: left;
+  min-height: 100vh;
 }
 #list-region {
-	width: auto;
-	overflow: auto;
-	margin-left: -10px;
-	margin-right: -10px;
+  width: auto;
+  overflow: auto;
+  margin-left: -10px;
+  margin-right: -10px;
 }
 article {
-	line-height: 28px;
-	font-size: 18px;
-	/*max-width: 670px;*/
+  line-height: 28px;
+  font-size: 18px;
+  /*max-width: 670px;*/
 }
 article p {
-	margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 .about,
 .credits {
-	background-color: #fff;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-bottom: 10px;
-	padding-top: 20px;
+  background-color: #fff;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-top: 20px;
 }
 .about-img {
-	width: 100%;
-	margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 .about-img img {
-	width: 100%;
-	height: auto;
+  width: 100%;
+  height: auto;
 }
 .panel-legal {
-	max-width: 580px;
+  max-width: 580px;
 }
 .panel-legal p {
-	font-size: 13px;
-	line-height: 18px;
-	margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 18px;
+  margin-bottom: 10px;
 }
 #pw-mob-title {
-	padding-left: 0px;
+  padding-left: 0px;
 }
 nav.navbar {
-	color: #000;
-	background-color: #fff;
-	font-family: 'LinLibertine', 'Times New Roman', serif;
-	font-size: 18px;
+  color: #000;
+  background-color: #fff;
+  font-family: "LinLibertine", "Times New Roman", serif;
+  font-size: 18px;
 }
 nav.navbar a.navbar-brand {
-	color: #000;
+  color: #000;
 }
-nav.navbar li>a {
-	padding-left: 20px;
-	padding-right: 10px; }
+nav.navbar li > a {
+  padding-left: 20px;
+  padding-right: 10px;
+}
 .navbar-header {
-	margin-left: 10px;
+  margin-left: 10px;
 }
 .pw-wrap {
-	position: relative;
-	width : 100%;
-	height: 50px;
+  position: relative;
+  width: 100%;
+  height: 50px;
 }
 .navbar-text {
-	position: relative;
-	margin: 0px auto;
-	float: none;
+  position: relative;
+  margin: 0px auto;
+  float: none;
 }
-nav.navbar .navbar-nav>.active>a,
-nav.navbar .navbar-nav .active>a:focus,
-nav.navbar .navbar-nav .active>a:hover
-{
-	background-color: #fff;
-	color: #333;
+nav.navbar .navbar-nav > .active > a,
+nav.navbar .navbar-nav .active > a:focus,
+nav.navbar .navbar-nav .active > a:hover {
+  background-color: #fff;
+  color: #333;
 }
-
 
 .book {
-	float: left;
-	overflow: hidden;
-	background-color: white;
+  float: left;
+  overflow: hidden;
+  background-color: white;
 }
 .book .book-data {
-	padding: 10px;
+  padding: 10px;
 }
-.book img{
-	max-width: 100%;
-	max-height: 100%;
-	background-color: white;
+.book img {
+  max-width: 100%;
+  max-height: 100%;
+  background-color: white;
 }
 @media screen and (max-width: 481px) {
-	nav.navbar .pw-width {
-		width: 100% !important;
-	}
+  nav.navbar .pw-width {
+    width: 100% !important;
+  }
+}
+
+.modal {
+  display: block;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  font-size: 1.2em;
+  min-height: 30px;
+  border: none;
+  padding: 0;
+}
+
+.modal-content {
+  margin: 10% auto;
+  width: min-content;
+}
+
+.modal-body > * {
+  z-index: 2;
+  position: relative;
+}
+
+.modal-body .modal-spinner {
+  clear: left;
+  margin: 0px auto;
+  text-align: center;
+  position: absolute;
+  top: 46%;
+  left: 48%;
+  z-index: 0;
+}
+
+.modal-close {
+  background: none;
+  float: right;
+  border: none;
+  box-shadow: none;
+  font-family: sans-serif;
+  padding: 10px 15px;
 }
