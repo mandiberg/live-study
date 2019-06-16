@@ -113,8 +113,11 @@ nav.navbar .navbar-nav .active > a:hover {
 }
 
 .modal {
-  display: block;
   background: rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+  display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .modal-header {
@@ -125,8 +128,16 @@ nav.navbar .navbar-nav .active > a:hover {
 }
 
 .modal-content {
-  margin: 10% auto;
+	background-color: transparent;
+	border: 0;
+	border-radius: 0;
+  box-shadow: none;
+  margin: 0 auto;
   width: min-content;
+}
+
+.modal-body {
+	padding: 0;
 }
 
 .modal-body > * {
@@ -146,9 +157,10 @@ nav.navbar .navbar-nav .active > a:hover {
 
 .modal-close {
   background: none;
+	color: #fff;
   float: right;
   border: none;
   box-shadow: none;
   font-family: sans-serif;
-  padding: 10px 15px;
+  padding: 5px;
 }

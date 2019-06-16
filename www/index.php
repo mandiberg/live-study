@@ -83,9 +83,13 @@ else
 	echo 'false';
 ?>,
 				LOADER_PATH: "img/spinner3.gif",
+        MAX_VIDEO_WIDTH: 1600,
+        MODAL_MARGIN: 30,
 				IMG_DIR: "https://s3.amazonaws.com/printwikipedia/img/thumbs",
 				ITEM_WIDTH: 300,
 				ITEM_MARGIN: 20,
+        VIDEO_WIDTH: 560,
+        VIDEO_HEIGHT: 315,
 				PRELOAD_THUMBS: false
 			};
 

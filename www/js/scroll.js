@@ -82,8 +82,8 @@ window.Scroller = (function() {
     // changed this from 'entry' to 'htmlEntry' so we don't
     // encounter scope naming conflicts with openModal
     var htmlEntry = g.tmpl(this.options.template)(entry);
-    this.$el.append(htmlEntry);
-    this.$el.find("a").click(function(evt) {
+    var entryDom = $(htmlEntry).appendTo(this.$el);
+    $(entryDom).click(function(evt) {
       evt.preventDefault();
       openModal(entry);
     });

@@ -7,16 +7,16 @@
 		</div>
 		<div class="modal-body">
 			<div class="modal-spinner">
-				<img  src="img/spinner3.gif"  
+				<img  src="img/spinner3.gif"
 							width="24px" height="24px"
 				/>
 			</div>
-			<iframe 
+			<iframe
 
-				width="560" 
-				height="315" 
-				src="https://www.youtube.com/embed/<%=c.videoId%>" 
-				frameborder="0" 
+				width="<%= c.videoWidth %>"
+				height="<%= c.videoHeight %>"
+				src="https://www.youtube.com/embed/<%=c.videoId%>"
+				frameborder="0"
 				allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 			</iframe>
 
@@ -25,5 +25,5 @@
 
 	</div>
 
-	
+
 </div>

@@ -27,18 +27,45 @@ $(function() {
 });
 
 var modal = null;
+
+function getVideoSize() {
+  var videoRatio = g.c.VIDEO_WIDTH / g.c.VIDEO_HEIGHT;
+  var videoWidth = window.innerWidth - 2 * g.c.MODAL_MARGIN;
+  videoWidth = Math.min(videoWidth, g.c.MAX_VIDEO_WIDTH)
+  var videoHeight = videoWidth / videoRatio;
+  if (videoHeight > window.innerHeight - 2 * g.c.MODAL_MARGIN) {
+    videoHeight = window.innerHeight - 2 * g.c.MODAL_MARGIN;
+    videoWidth = videoHeight * videoRatio;
+  }
+  return {
+    videoHeight: videoHeight,
+    videoWidth: videoWidth
+  };
+}
+
 function openModal(entry) {
   if (!modal) {
-    var modalContents = g.tmpl("modal")(entry);
-    modal = $(modalContents).appendTo(document.body);
+    modal = $('<div>').appendTo(document.body);
   }
+  var data = jQuery.extend(getVideoSize(), entry);
+  console.log(data);
+  var modalContents = g.tmpl("modal")(data);
+  modal.html(modalContents);
 }
+
+window.addEventListener('resize', function() {
+  if (modal) {
+    var s = getVideoSize();
+    $(modal).find('iframe').attr({
+      height: s.videoHeight,
+      width: s.videoWidth
+    });
+  }
+});
 
 function closeModal() {
   if (modal) {
     $(modal).remove();
     modal = null;
-  } else {
-    throw Error("there is no modal to close!");
   }
 }
