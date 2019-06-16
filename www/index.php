@@ -67,6 +67,9 @@
 		<script type="text/html" id="tmpl-video">
 			<?php require('video.js.tmpl') ?>
 		</script>
+		<script type="text/html" id="tmpl-modal">
+			<?php require('modal.js.tmpl') ?>
+		</script>
 		<script type="text/html" id="tmpl-spinner">
 			<?php require('spinner.js.tmpl') ?>
 		</script>

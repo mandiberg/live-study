@@ -1,131 +1,137 @@
-window.Scroller = (function(){
-		// usage:
-		// new Scroller( $jquery_container, function(page){ return path_to_page });
-		//
-		var Scroller = function($container, options){
-			var self = this;
-			$container.empty();
-			this.$container = $container;
-			this.$el = $('<div class="scroller">').appendTo($container);
-			this.options = options;
-			this.scroll_el = options.scroll_el || window;
-			this.spinner_url = options.spinner_url || g.c.LOADER_PATH;
-			this.chunk = 0;
-			this.last_chunk = false;
-			this.dataPath = options.dataPath
-			this.item_width = options.item_width || g.c.ITEM_WIDTH;
-			this.item_margin = options.item_margin || g.c.ITEM_MARGIN;
-			this.entry_c = 1;
-			this.entry_i = 0;
-			this.entry_len = 20;
-			this.current_row = null;
-			this.fetching = false;
-			this.loader_threshold = 800;
-			//this.listView = new infinity.ListView(this.$el, {
-				//lazy: this.lazyLoader
-			//});
-			this.renderChunk();
-			this.listen();
+window.Scroller = (function() {
+  // usage:
+  // new Scroller( $jquery_container, function(page){ return path_to_page });
+  //
+  var Scroller = function($container, options) {
+    var self = this;
+    $container.empty();
+    this.$container = $container;
+    this.$el = $('<div class="scroller">').appendTo($container);
+    this.options = options;
+    this.scroll_el = options.scroll_el || window;
+    this.spinner_url = options.spinner_url || g.c.LOADER_PATH;
+    this.chunk = 0;
+    this.last_chunk = false;
+    this.dataPath = options.dataPath;
+    this.item_width = options.item_width || g.c.ITEM_WIDTH;
+    this.item_margin = options.item_margin || g.c.ITEM_MARGIN;
+    this.entry_c = 1;
+    this.entry_i = 0;
+    this.entry_len = 20;
+    this.current_row = null;
+    this.fetching = false;
+    this.loader_threshold = 800;
+    //this.listView = new infinity.ListView(this.$el, {
+    //lazy: this.lazyLoader
+    //});
+    this.renderChunk();
+    this.listen();
+  };
 
-		};
+  Scroller.prototype.listen = function() {
+    this.updateScheduled = false;
+    this.$loader = $(g.tmpl("spinner")(this)).insertAfter(this.$el);
+    var self = this;
+    $(this.scroll_el).off("scroll"); //reset preexisting handlers
+    $(this.scroll_el).on("scroll", function() {
+      if (!self.updateScheduled && self.$el.is(":visible")) {
+        setTimeout(function() {
+          if (self.onScreen(self.$loader)) {
+            self.renderChunk();
+          }
+          self.updateScheduled = false;
+        }, 500);
+        self.updateScheduled = true;
+      }
+    });
+  };
+  // lots of this copied from
+  // http://airbnb.github.io/infinity/demo-on.html
+  Scroller.prototype.lazyLoader = function() {
+    var self = this;
+    _.defer(function() {
+      $(self)
+        .find(".preload")
+        .each(function() {
+          var $ref = $(this);
+          $ref.attr("src", $ref.attr("data-original"));
+        });
+    });
+  };
 
-		Scroller.prototype.listen = function(){
-			this.updateScheduled = false;
-			this.$loader = $(g.tmpl('spinner')(this)).insertAfter(this.$el);
-			var self = this;
-			$(this.scroll_el).off('scroll'); //reset preexisting handlers
-			$(this.scroll_el).on( 'scroll', function(){
-				if(!self.updateScheduled && self.$el.is(':visible')){
-					setTimeout(function(){
-						if(self.onScreen(self.$loader)) {
-							self.renderChunk();
-						}
-						self.updateScheduled = false;
-					}, 500);
-					self.updateScheduled = true;
-				}
-			});
-		};
-		// lots of this copied from
-		// http://airbnb.github.io/infinity/demo-on.html
-		Scroller.prototype.lazyLoader = function(){
-			var self = this;
-			_.defer(function(){
-				$(self).find('.preload').each(function(){
-					var $ref = $(this);
-					$ref.attr('src', $ref.attr('data-original'));
-				});
-			});
-		};
+  Scroller.prototype.onScreen = function($item) {
+    var viewportBottom =
+      $(this.scroll_el).scrollTop() + $(this.scroll_el).height();
+    var diff = $item.offset().top - viewportBottom;
+    return diff < this.loader_threshold;
+  };
 
-		Scroller.prototype.onScreen = function($item){
-			var viewportBottom = $(this.scroll_el).scrollTop() +
-														$(this.scroll_el).height();
-			var diff = $item.offset().top - viewportBottom;
-			return diff < this.loader_threshold;
-		};
+  Scroller.prototype.renderChunk = function(data) {
+    var self = this;
+    this.withNextCollection(function() {
+      var start = self.entry_i * self.entry_len;
+      var end = (self.entry_i + 1) * self.entry_len;
+      if (end > self.collection.length) {
+        end = self.collection.length;
+      }
+      var chunk = self.collection.slice(start, end);
+      _.each(chunk, _.bind(self.renderEntry, self));
+    });
+  };
+  Scroller.prototype.renderEntry = function(entry) {
+    // changed this from 'entry' to 'htmlEntry' so we don't
+    // encounter scope naming conflicts with openModal
+    var htmlEntry = g.tmpl(this.options.template)(entry);
+    this.$el.append(htmlEntry);
+    this.$el.find("a").click(function(evt) {
+      evt.preventDefault();
+      openModal(entry);
+    });
+  };
 
-		Scroller.prototype.renderChunk = function(data){
-			var self = this;
-			this.withNextCollection( function(){
-				var start = self.entry_i * self.entry_len;
-				var end = (self.entry_i + 1) * self.entry_len;
-				if (end > self.collection.length) {
-					end = self.collection.length;
-				}
-				var chunk = self.collection.slice(start, end);
-				_.each(chunk, _.bind(self.renderEntry, self));
-			});
-		};
-		Scroller.prototype.renderEntry = function(entry){
-			var entry = g.tmpl(this.options.template)(entry);
-			this.$el.append(entry);
-			this.$el.find('a').click(function(evt) {
-				evt.preventDefault();
-				openModal(entry);
-			});
-		};
+  Scroller.prototype.withNextCollection = function(cb) {
+    this.getNextCollection(cb);
+  };
 
-		Scroller.prototype.withNextCollection = function(cb){
-			this.getNextCollection(cb);
-		};
+  Scroller.prototype.destroy = function() {
+    this.listView.remove();
+    this.clearLoader();
+  };
 
-		Scroller.prototype.destroy = function(){
-			this.listView.remove();
-			this.clearLoader();
-		};
+  Scroller.prototype.clearLoader = function() {
+    this.$loader.remove();
+  };
+  Scroller.prototype.onEndReached = function() {
+    this.clearLoader();
+  };
 
-		Scroller.prototype.clearLoader = function(){
-			this.$loader.remove();
-		};
-		Scroller.prototype.onEndReached = function(){
-			this.clearLoader();
-		};
-
-		Scroller.prototype.getNextCollection = function(cb){
-			var self = this;
-			this.fetching = true;
-			if(this.last_chunk){
-				return false;
-			}
-			if (self.collection && ((self.entry_i + 1) * self.entry_len) < self.entry_c - 1) {
-				self.entry_i++;
-				cb();
-			} else if (self.collection) {
-				self.last_chunk = true;
-				self.onEndReached();
-			} else {
-				$.ajax({
-					url: this.dataPath,
-					success: function(data){
-						data = JSON.parse(data);
-						self.fetching = false;
-						self.collection = data;
-						self.entry_c = data.length;
-						cb();
-					}
-				});
-			}
-		};
-		return Scroller;
-})()
+  Scroller.prototype.getNextCollection = function(cb) {
+    var self = this;
+    this.fetching = true;
+    if (this.last_chunk) {
+      return false;
+    }
+    if (
+      self.collection &&
+      (self.entry_i + 1) * self.entry_len < self.entry_c - 1
+    ) {
+      self.entry_i++;
+      cb();
+    } else if (self.collection) {
+      self.last_chunk = true;
+      self.onEndReached();
+    } else {
+      $.ajax({
+        url: this.dataPath,
+        success: function(data) {
+          data = JSON.parse(data);
+          self.fetching = false;
+          self.collection = data;
+          self.entry_c = data.length;
+          cb();
+        }
+      });
+    }
+  };
+  return Scroller;
+})();
