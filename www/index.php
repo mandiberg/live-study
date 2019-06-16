@@ -86,7 +86,7 @@ else
 ?>,
 				LOADER_PATH: "img/spinner3.gif",
         MAX_VIDEO_WIDTH: 1600,
-        MODAL_MARGIN: 30,
+        MODAL_MARGIN: 36,
 				IMG_DIR: "https://s3.amazonaws.com/printwikipedia/img/thumbs",
 				ITEM_WIDTH: 290,
 				ITEM_MARGIN: 20,
