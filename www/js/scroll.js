@@ -78,7 +78,12 @@ window.Scroller = (function(){
 			});
 		};
 		Scroller.prototype.renderEntry = function(entry){
-			this.$el.append(g.tmpl(this.options.template)(entry));
+			var entry = g.tmpl(this.options.template)(entry);
+			this.$el.append(entry);
+			this.$el.find('a').click(function(evt) {
+				evt.preventDefault();
+				openModal(entry);
+			});
 		};
 
 		Scroller.prototype.withNextCollection = function(cb){

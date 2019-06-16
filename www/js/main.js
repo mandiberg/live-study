@@ -22,3 +22,21 @@ $(function(){
 	});
 	onResize();
 });
+
+var modal = null;
+function openModal(entry) {
+	if (!modal) {
+		modal = $('<div class="modal">').appendTo(document.body);
+		$('<h2>' + entry.title + '</h2>').appendTo(modal);
+	}
+
+}
+
+function closeModal() {
+	if (modal) {
+		$(doucument).remove(modal);
+		modal = null;
+	} else {
+		throw Error('there is no modal to close!');
+	}
+}

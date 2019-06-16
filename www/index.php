@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Michael Paints</title>
+    <title>Live Study</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<div id="pw-mob-title" class="navbar-brand visible-xs">
-					Painting Test Site</div>
+					Live Study</div>
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
@@ -37,7 +37,7 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="#/">Painting Test Site</a></li>
+						<li><a href="#/">Live Study</a></li>
 						<li><a href="#/about">About</a></li>
 					</ul>
 				</div><!-- /.navbar-collapse -->
@@ -81,12 +81,9 @@ else
 ?>,
 				LOADER_PATH: "img/spinner3.gif",
 				IMG_DIR: "https://s3.amazonaws.com/printwikipedia/img/thumbs",
-				ITEM_WIDTH: 180,
+				ITEM_WIDTH: 300,
 				ITEM_MARGIN: 20,
-				PRELOAD_THUMBS: false,
-				LULU_URL: function(token){
-					return "http://www.lulu.com/shop/product-" + token + ".html";
-				}
+				PRELOAD_THUMBS: false
 			};
 
 			g.tmpl = function(name){
