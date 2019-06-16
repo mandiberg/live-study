@@ -1,22 +1,10 @@
 <div class="book"
 	data-book-name="<%= c.title %>"
-	style="width: <%= g.c.ITEM_WIDTH %>px; height: <%= g.c.ITEM_WIDTH*1.45%>px;
+	style="width: <%= g.c.ITEM_WIDTH %>px;
 				margin: 0px <%= g.c.ITEM_MARGIN/2 %>px <%= g.c.ITEM_MARGIN %>px
 								<%= g.c.ITEM_MARGIN/2 %>px;">
 	<a href="https://www.youtube.com/watch?v=<%= c.videoId %>" target="_blank">
-		<div class="book-thumb">
-			<% if(g.c.PRELOAD_THUMBS){
-			%>
-				<img 	class="lazy book thumb preload"
-							src="<%= g.c.LOADER_PATH %>/"
-							data-original="<%= c.thumbnail %>" />
-			<%
-				} else {
-			%>
-				<img class="thumb" src="<%= c.thumbnail %>" />
-			<%
-				}
-			%>
+		<div class="book-thumb" style="background-image:url(<%= c.thumbnail %>);">
 		</div>
 		<div class="book-data">
 				<h4 class="book-name">

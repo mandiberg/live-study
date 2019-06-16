@@ -8,6 +8,8 @@
     <title>Live Study</title>
 
     <!-- Bootstrap -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <script src="js/modernizr-2.6.2.min.js"></script>
@@ -86,7 +88,7 @@ else
         MAX_VIDEO_WIDTH: 1600,
         MODAL_MARGIN: 30,
 				IMG_DIR: "https://s3.amazonaws.com/printwikipedia/img/thumbs",
-				ITEM_WIDTH: 300,
+				ITEM_WIDTH: 290,
 				ITEM_MARGIN: 20,
         VIDEO_WIDTH: 560,
         VIDEO_HEIGHT: 315,
