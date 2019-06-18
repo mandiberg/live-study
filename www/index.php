@@ -41,6 +41,29 @@
 					<ul class="nav navbar-nav">
 						<li><a href="#/">Live Study</a></li>
 						<li><a href="#/about">About</a></li>
+						
+<?php
+
+$API_KEY = 'AIzaSyBcHKbxWARCvJNzHVfD3OeA7385S5sJVQc';
+$ChannelID = 'UCq8slAGrCXTjEy1Kp-Y2JwQ';
+
+$channelInfo = 'https://www.googleapis.com/youtube/v3/search?part=snippet&channelId='.$ChannelID.'&type=video&eventType=live&key='.$API_KEY;
+
+$extractInfo = file_get_contents($channelInfo);
+$extractInfo = str_replace('},]',"}]",$extractInfo);
+$showInfo = json_decode($extractInfo, true);
+
+if($showInfo['pageInfo']['totalResults'] === 0){
+
+//						echo '<li><a href="#/about">I am offline</a></li>';
+// don't do anything
+
+}else{
+
+						echo '<li><a href="https://www.youtube.com/user/mandiberg">I am live right now!</a></li>';
+
+}
+?>
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.pw-width -->
