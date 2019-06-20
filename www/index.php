@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Live Study</title>
+   	<meta name="description" content="Michael Mandiberg is painting portraits of all the assistants, apprentices, and consultants who have worked in their studio; Live Study hosts live streams of these painting sessions.">
 
     <!-- Bootstrap -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
@@ -26,7 +27,7 @@
 			<div class="pw-width navbar-text">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-					<div id="pw-mob-title" class="navbar-brand visible-xs">
+					<div id="pw-mob-title" class="navbar-brand visible-xs" style="color: #f2f2f2;">
 					Live Study</div>
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 						<span class="sr-only">Toggle navigation</span>
