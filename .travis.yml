@@ -9,7 +9,7 @@ before_install:
 - git remote rm origin
 - git remote add origin "https://blerchin:$GITHUB_TOKEN@github.com/blerchin/mandiberg-painting.git"
 script:
-- docker run -v $(pwd)/data:/root/mandiberg-painting/data -e API_KEY -e CHANNEL_ID
+- docker run -v $(pwd)/data:/root/mandiberg-painting/data -e API_KEY -e PLAYLIST_ID
   mandiberg-painting python getYoutube.py
 - export TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
 - git add -u
