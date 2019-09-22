@@ -46,12 +46,13 @@ def filter_videos(videos):
     return [v for v in videos if datetime.strptime(v['snippet']['publishedAt'], '%Y-%m-%dT%H:%M:%S.%fZ') > FILTER_BEFORE]
 
 def format_video(video):
+    snippet = video['snippet']
     return {
-        'thumbnail': video['snippet']['thumbnails']['medium']['url'],
-        'title': video['snippet']['title'],
-        'description': video['snippet']['description'],
-        'published': video['snippet']['publishedAt'],
-        'videoId': video['id']['videoId']
+        'thumbnail': snippet['thumbnails']['medium']['url'],
+        'title': snippet['title'],
+        'description': snippet['description'],
+        'published': snippet['publishedAt'],
+        'videoId': snippet['resourceId']['videoId']
     }
 
 videos = [format_video(v) for v in filter_videos(get_videos())]
