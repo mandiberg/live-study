@@ -17,7 +17,7 @@ FILTER_BEFORE = datetime(2019, 1, 1)
 DATA_PATH = 'data/videos.json'
 
 def get_request_url(api_key, playlist_id, page_token=None):
-    url = 'https://www.googleapis.com/youtube/v3/playlistItems?key=%s&playlistId=%s&part=snippet,id&order=date&maxResults=50' % (api_key, playlist_id)
+    url = 'https://www.googleapis.com/youtube/v3/playlistItems?key=%s&playlistId=%s&part=snippet,id&maxResults=50' % (api_key, playlist_id)
     if page_token:
         url += '&pageToken=%s' % page_token
     return url
@@ -42,8 +42,11 @@ def get_videos():
             break;
     return videos
 
+def parse_timestamp(timestamp):
+    return datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+
 def filter_videos(videos):
-    return [v for v in videos if datetime.strptime(v['snippet']['publishedAt'], '%Y-%m-%dT%H:%M:%S.%fZ') > FILTER_BEFORE]
+    return [v for v in videos if parse_timestamp(v['snippet']['publishedAt']) > FILTER_BEFORE]
 
 def format_video(video):
     snippet = video['snippet']
@@ -56,6 +59,7 @@ def format_video(video):
     }
 
 videos = [format_video(v) for v in filter_videos(get_videos())]
+videos.sort(key=lambda v: parse_timestamp(v['published']), reverse=True)
 
 with open(DATA_PATH, 'w') as f:
     f.write(dumps(videos))
