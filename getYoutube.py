@@ -43,7 +43,7 @@ def get_videos():
     return videos
 
 def parse_timestamp(timestamp):
-    return datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+    return datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
 
 def filter_videos(videos):
     return [v for v in videos if parse_timestamp(v['snippet']['publishedAt']) > FILTER_BEFORE]
