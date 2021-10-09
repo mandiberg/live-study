@@ -53,6 +53,7 @@ def filter_videos(videos):
 
 def format_video(video):
     snippet = video['snippet']
+    print('getting details for %s' % snippet['title'])
     return {
         'thumbnail': snippet['thumbnails']['medium']['url'],
         'title': snippet['title'],
