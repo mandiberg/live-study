@@ -49,7 +49,10 @@ def parse_timestamp(timestamp):
             return datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
 
 def filter_videos(videos):
-    return [v for v in videos if parse_timestamp(v['snippet']['publishedAt']) > FILTER_BEFORE]
+    # check for published after a certain date:
+    videos = [v for v in videos if parse_timestamp(v['snippet']['publishedAt']) > FILTER_BEFORE]
+    # check for a valid non-deleted video with thumbnails:
+    return [v for v in videos if v['snippet']['thumbnails']]
 
 def format_video(video):
     snippet = video['snippet']
