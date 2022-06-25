@@ -20,9 +20,8 @@ jobs:
               run: |
                 git clone -b master --depth 1 "https://mandiberg:$GITHUB_TOKEN@github.com/mandiberg/live-study.git"
                 cd live-study
-                git config --local user.name "Travis CI"
-                git config --local user.email "ben@lerchin.com"
-                git checkout origin/master
+                git config --local user.name "${GH_USER}"
+                git config --local user.email "${GH_EMAIL}"
             - name: "pull videos"
               run: |
                 cd live-study
