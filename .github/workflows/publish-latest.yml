@@ -16,20 +16,23 @@ jobs:
             GH_USER: ${{ secrets.GH_USER }}
             GH_EMAIL: ${{ secrets.GH_EMAIL }}
         steps:
-            - uses: actions/checkout@v2
-              with:
-                token: ${{secrets.GITHUB_TOKEN}}
-            - name: "build container"
+            - name: "clone master"
               run: |
-                docker build -t live-study .
+                git clone -b master --depth 1 "https://mandiberg:$GITHUB_TOKEN@github.com/mandiberg/live-study.git"
+                cd live-study
                 git config --local user.name "Travis CI"
                 git config --local user.email "ben@lerchin.com"
-                git remote rm origin
-                git remote add origin "https://mandiberg:$GITHUB_TOKEN@github.com/mandiberg/live-study.git"
-                git pull origin master
+                git checkout origin/master
+            - name: "pull videos"
+              run: |
+                cd live-study
+                docker build -t live-study .
                 docker run -v $(pwd)/data:/root/mandiberg-painting/data\
                     -e API_KEY -e PLAYLIST_ID \
                     live-study:latest python getYoutube.py
+            - name: "push changes"
+              run: |
+                cd live-study
                 export TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
                 git add -u 
                 git diff-index --quiet HEAD || git commit -m "Adding results on $TIMESTAMP"
