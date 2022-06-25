@@ -9,7 +9,6 @@ on:
 jobs:
     publish-latest:
         runs-on: ubuntu-latest
-        container: python:3.6.7
         env: 
             PLAYLIST_ID: 'UUq8slAGrCXTjEy1Kp-Y2JwQ'
             API_KEY: ${{ secrets.API_KEY }}
@@ -17,24 +16,22 @@ jobs:
             GH_USER: ${{ secrets.GH_USER }}
             GH_EMAIL: ${{ secrets.GH_EMAIL }}
         steps:
-            - name: "update git"
-              run: |
-                apt-get update
-                apt-get install -y software-properties-common
-                add-apt-repository ppa:git-core/ppa
-                apt-get update
-                apt-get install -yf git
-            - name: Install dependencies
-              run: pip3 install -U python-dotenv==0.1.5 requests==2.7.0
             - uses: actions/checkout@v2
               with:
                 token: ${{secrets.GITHUB_TOKEN}}
-            - name: Pull videos
-              run: python getYoutube.py
-            - name: Push files
-              uses: EndBug/add-and-commit@v9
-              with:
-                add: "data/videos.json"
-                author_name: "${{secrets.GH_USER}}"
-                author_email: "${{secrets.GH_EMAIL}}"
-                message: "Adding results on $(date +'%Y%m%d-%H%M%S')"
+            - name: "build container"
+              run: |
+                docker build -t live-study .
+                git config --local user.name "Travis CI"
+                git config --local user.email "ben@lerchin.com"
+                git remote rm origin
+                git remote add origin "https://mandiberg:$GITHUB_TOKEN@github.com/mandiberg/live-study.git"
+                git pull origin master
+                docker run -v $(pwd)/data:/root/mandiberg-painting/data\
+                    -e API_KEY -e PLAYLIST_ID \
+                    live-study:latest python getYoutube.py
+                export TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
+                git add -u 
+                git diff-index --quiet HEAD || git commit -m "Adding results on $TIMESTAMP"
+                git push origin master
+
